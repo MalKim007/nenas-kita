@@ -12,11 +12,10 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter" alt="Flutter">
-  <img src="https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart" alt="Dart">
+  <img src="https://img.shields.io/badge/Flutter-3.32.8-02569B?logo=flutter" alt="Flutter">
+  <img src="https://img.shields.io/badge/Dart-3.81-0175C2?logo=dart" alt="Dart">
   <img src="https://img.shields.io/badge/Firebase-Backend-FFCA28?logo=firebase" alt="Firebase">
   <img src="https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-green" alt="Platform">
-  <img src="https://img.shields.io/badge/License-MIT-blue" alt="License">
 </p>
 
 <p align="center">
@@ -109,7 +108,6 @@ For inquiries about NenasKita:
 - [Getting Started](#getting-started)
 - [Database Schema](#database-schema)
 - [API Integrations](#api-integrations)
-- [Security](#security)
 - [Deployment](#deployment)
 - [Implementation Status](#implementation-status)
 - [Future Improvements](#future-improvements)
@@ -225,7 +223,7 @@ Difficult discovery        ──►   Map-based farm finder
 
 ![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
 
-Flutter 3.x<br>Dart 3.x
+Flutter 3.32.8<br>Dart 3.8.1
 
 </td>
 <td align="center" width="150">
@@ -234,7 +232,7 @@ Flutter 3.x<br>Dart 3.x
 
 ![Riverpod](https://img.shields.io/badge/Riverpod-0553B1?style=for-the-badge)
 
-Riverpod 2.x<br>Freezed
+Riverpod 2.0.31<br>Freezed
 
 </td>
 <td align="center" width="150">
@@ -459,16 +457,17 @@ lib/
 
 ### Prerequisites
 
-- **Flutter SDK** 3.8.1 or higher
-- **Dart SDK** 3.x
-- **Firebase CLI** (for deployment)
+- **Flutter SDK** 3.32.8 or higher
+- **Dart Version** 3.8.1 or higher
+- **Firebase CLI** 14.27.0 or higher
+- **DevTools** 2.45.1 or higher
 - **Android Studio** or **VS Code** with Flutter extensions
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/[YOUR_USERNAME]/nenas_kita.git
+   git clone https://github.com/MalKim007/nenas-kita.git
    cd nenas_kita
    ```
 
@@ -600,39 +599,6 @@ All models use **Freezed** for immutability and include `fromFirestore()` / `toF
 
 ---
 
-## Security
-
-### Role-Based Access Control (RBAC)
-
-```
-┌────────────────────────────────────────────────────────────────┐
-│                    PERMISSION MATRIX                           │
-├───────────────┬─────────┬───────┬─────────────┬───────┬────────┤
-│ Resource      │ Farmer  │ Buyer │ Wholesaler  │ Admin │ Super  │
-├───────────────┼─────────┼───────┼─────────────┼───────┼────────┤
-│ Own Profile   │ RW      │ RW    │ RW          │ RW    │ RW     │
-│ Own Farm      │ CRUD    │ -     │ -           │ R     │ CRUD   │
-│ Own Products  │ CRUD    │ -     │ -           │ R     │ CRUD   │
-│ All Farms     │ R       │ R     │ R           │ R     │ CRUD   │
-│ Retail Prices │ RW      │ R     │ R           │ R     │ RW     │
-│ Wholesale $   │ RW      │ -     │ R           │ R     │ RW     │
-│ Audit Logs    │ -       │ -     │ -           │ CR    │ CR     │
-│ Verification  │ -       │ -     │ -           │ RW    │ RW     │
-└───────────────┴─────────┴───────┴─────────────┴───────┴────────┘
-
-R = Read, W = Write, C = Create, U = Update, D = Delete
-```
-
-### Security Measures
-
-- **Firebase Auth**: Email/password authentication with session management
-- **Firestore Security Rules**: Row-level and field-level access control
-- **Immutable Audit Logs**: Verification records cannot be modified or deleted
-- **Soft Delete**: Records use `isActive` flag; hard delete restricted to superadmin
-- **Offline Data**: Firestore persistence with automatic sync
-
----
-
 ## Deployment
 
 ### Android APK
@@ -653,13 +619,6 @@ flutter build web
 # Deploy to Firebase
 firebase deploy --only hosting
 ```
-
-### iOS (Future)
-
-```bash
-flutter build ios --release
-```
-
 ---
 
 ## Implementation Status
