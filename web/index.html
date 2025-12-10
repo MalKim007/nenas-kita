@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="NenasKita - Platform digital untuk pertanian nanas di Melaka. Hubungkan petani, pembeli dan LPNM untuk pengurusan pertanian yang lebih baik.">
+  <meta name="keywords" content="nenas, pineapple, LPNM, farming, pertanian, Melaka, Malaysia, Morris, Josapine, MD2">
+  <meta name="author" content="LPNM Malaysia">
+
+  <!-- Theme and PWA Meta Tags -->
+  <meta name="theme-color" content="#D97706">
+  <meta name="msapplication-TileColor" content="#D97706">
+  <meta name="msapplication-TileImage" content="icons/Icon-144.png">
+
+  <!-- iOS Meta Tags -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="NenasKita">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/Icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <title>NenasKita - LPNM Pineapple Farming Platform</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Loading Screen Styles -->
+  <style>
+    body {
+      background-color: #FEF3C7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .loading img {
+      width: 120px;
+      height: 120px;
+      border-radius: 24px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .loading p {
+      margin-top: 16px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #78350F;
+      font-size: 14px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+  </style>
+</head>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
+<body>
+  <!-- Loading indicator while Flutter initializes -->
+  <div class="loading" id="loading">
+    <img src="icons/Icon-192.png" alt="NenasKita Logo">
+    <p>Initializing NenasKita...</p>
+  </div>
+
+  <script>
+    // PWA Install Prompt Handler
+    let deferredPrompt = null;
+    const PWA_INSTALLED_KEY = 'nenaskita_pwa_installed';
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      // Stash the event so it can be triggered later
+      deferredPrompt = e;
+      // Dispatch custom event for Flutter to catch
+      window.dispatchEvent(new CustomEvent('pwa-install-available'));
+    });
+
+    window.addEventListener('appinstalled', () => {
+      // Clear the deferredPrompt so it can be garbage collected
+      deferredPrompt = null;
+      // Remember install state so we can hide the banner in-tab too
+      try {
+        window.localStorage.setItem(PWA_INSTALLED_KEY, 'true');
+      } catch (_) {}
+      // Dispatch event for Flutter
+      window.dispatchEvent(new CustomEvent('pwa-installed'));
+      console.log('PWA was installed');
+    });
+
+    // Function to be called from Flutter via JS interop
+    window.promptPwaInstall = async function() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        if (outcome === 'accepted') {
+          try {
+            window.localStorage.setItem(PWA_INSTALLED_KEY, 'true');
+          } catch (_) {}
+        }
+        return outcome;
+      }
+      return 'unavailable';
+    };
+
+    // Check if running as installed PWA
+    window.isPwaInstalled = function() {
+      const installedFlag = (() => {
+        try {
+          return window.localStorage.getItem(PWA_INSTALLED_KEY) === 'true';
+        } catch (_) {
+          return false;
+        }
+      })();
+      return window.matchMedia('(display-mode: standalone)').matches ||
+             window.navigator.standalone === true ||
+             installedFlag;
+    };
+
+    // Check if install prompt is available
+    window.isPwaInstallAvailable = function() {
+      return deferredPrompt !== null;
+    };
+  </script>
+
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

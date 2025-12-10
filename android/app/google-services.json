@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "819426796524",
+    "project_id": "sulam-nenaskita",
+    "storage_bucket": "sulam-nenaskita.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819426796524:android:d6a44ed4a6b9d9e13f96c9",
+        "android_client_info": {
+          "package_name": "com.example.nenas_kita"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALA1PxuyBVjEGF29GBpnkms9dIUgYSMwk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

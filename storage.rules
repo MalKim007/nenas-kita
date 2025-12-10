@@ -1,0 +1,56 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isValidImageType() {
+      return request.resource.contentType.matches('image/(jpeg|jpg|png|gif|webp)');
+    }
+
+    function isValidFileSize() {
+      // 5MB max file size
+      return request.resource.size < 5 * 1024 * 1024;
+    }
+
+    // Farm storage: farms/{farmId}/**
+    // Any authenticated user can upload (ownership validated at app layer)
+    match /farms/{farmId}/{allPaths=**} {
+      // Anyone authenticated can read farm images
+      allow read: if isAuthenticated();
+
+      // Any authenticated user can upload valid images
+      // Ownership is validated at the application layer
+      allow write: if isAuthenticated()
+        && isValidImageType()
+        && isValidFileSize();
+
+      // Any authenticated user can delete (ownership at app layer)
+      allow delete: if isAuthenticated();
+    }
+
+    // User avatars: users/{userId}/**
+    match /users/{userId}/{allPaths=**} {
+      // Anyone authenticated can read avatars
+      allow read: if isAuthenticated();
+
+      // Only the user can upload their own avatar
+      allow write: if isAuthenticated()
+        && request.auth.uid == userId
+        && isValidImageType()
+        && isValidFileSize();
+
+      // Only the user can delete their own avatar
+      allow delete: if isAuthenticated()
+        && request.auth.uid == userId;
+    }
+
+    // Deny all other paths by default
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
