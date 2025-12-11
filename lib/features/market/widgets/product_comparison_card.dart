@@ -114,22 +114,23 @@ class ProductComparisonCard extends ConsumerWidget {
           borderRadius: BorderRadius.circular(AppSpacing.radiusM),
           child: Stack(
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                // Product/Farm Image with Badges
-                Stack(
-                  clipBehavior: Clip.none,
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(AppSpacing.radiusM),
-                        bottomLeft: Radius.circular(AppSpacing.radiusM),
-                      ),
-                      child: SizedBox(
-                        width: 100,
-                        height: 120,
-                        child: displayImage != null && displayImage.isNotEmpty
+                // Product/Farm Image with Badges
+                SizedBox(
+                  width: 100,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Positioned.fill(
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(AppSpacing.radiusM),
+                            bottomLeft: Radius.circular(AppSpacing.radiusM),
+                          ),
+                          child: displayImage != null && displayImage.isNotEmpty
                             ? CachedNetworkImage(
                                 imageUrl: displayImage,
                                 fit: BoxFit.cover,
@@ -146,28 +147,29 @@ class ProductComparisonCard extends ConsumerWidget {
                                     _buildPlaceholder(),
                               )
                             : _buildPlaceholder(),
-                      ),
-                    ),
-
-                    // Verified Badge (if farm is LPNM verified)
-                    if (isVerified)
-                      const Positioned(
-                        top: 4,
-                        left: 4,
-                        child: _VerifiedBadge(),
-                      ),
-
-                    // Deal Badge (top-right, overlapping edge)
-                    if (dealLevel != null)
-                      Positioned(
-                        top: -8,
-                        right: -8,
-                        child: DealBadge(
-                          dealLevel: dealLevel!,
-                          percentDiff: comparison!.percentDiff,
                         ),
                       ),
-                  ],
+
+                      // Verified Badge (if farm is LPNM verified)
+                      if (isVerified)
+                        const Positioned(
+                          top: 4,
+                          left: 4,
+                          child: _VerifiedBadge(),
+                        ),
+
+                      // Deal Badge (top-right, overlapping edge)
+                      if (dealLevel != null)
+                        Positioned(
+                          top: -8,
+                          right: -8,
+                          child: DealBadge(
+                            dealLevel: dealLevel!,
+                            percentDiff: comparison!.percentDiff,
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
 
                 // Product Details
@@ -290,7 +292,8 @@ class ProductComparisonCard extends ConsumerWidget {
                     ),
                   ),
                 ),
-                ],
+                  ],
+                ),
               ),
 
               // Ribbon (if provided, for top 3)

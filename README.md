@@ -31,9 +31,9 @@
 
 ## Executive Summary
 
-**NenasKita** is a comprehensive mobile application and web portal developed to digitalize and modernize the pineapple farming industry in Melaka, Malaysia. Built in collaboration with **LPNM (Lembaga Perindustrian Nanas Malaysia)**, this platform connects farmers, buyers and wholesalers in a unified digital ecosystem.
+**NenasKita** is a comprehensive mobile application developed to digitalize and modernize the pineapple farming industry in Melaka, Malaysia. Built in collaboration with **LPNM (Lembaga Perindustrian Nanas Malaysia)**, this platform connects farmers, buyers and wholesalers in a unified digital ecosystem.
 
-The application addresses critical challenges faced by Melaka's pineapple farmers and entreprenuers, including lack of market visibility, absence of price transparency and inefficient seller-buyer connections. By providing real-time market data, harvest planning tools and direct communication channels, NenasKita empowers local farmers and treprenuers.
+The application addresses critical challenges faced by Melaka's pineapple farmers and entreprenuers, including lack of market visibility, absence of price transparency and inefficient seller-buyer connections. By providing real-time market data, harvest planning tools and direct communication channels, NenasKita empowers local farmers and entreprenuers.
 
 ---
 

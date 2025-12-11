@@ -146,32 +146,36 @@ class _FarmerHomeScreenState extends ConsumerState<FarmerHomeScreen>
                         );
                       }
 
+                      // Check if user is an actual farmer (has farm with land)
+                      final isActualFarmer = ref.watch(isActualFarmerProvider);
+
                       // Watch overdue plans for conditional banner
                       final overduePlansAsync = ref.watch(myOverduePlansProvider);
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Overdue Harvest Banner (conditional)
-                          overduePlansAsync.when(
-                            data: (overduePlans) {
-                              if (overduePlans.isEmpty) {
-                                return const SizedBox.shrink();
-                              }
-                              return _AnimatedFadeSlide(
-                                controller: _animationController,
-                                delay: 0.05,
-                                child: const Column(
-                                  children: [
-                                    OverdueHarvestBanner(),
-                                    AppSpacing.vGapL,
-                                  ],
-                                ),
-                              );
-                            },
-                            loading: () => const SizedBox.shrink(),
-                            error: (_, __) => const SizedBox.shrink(),
-                          ),
+                          // Overdue Harvest Banner (only for actual farmers)
+                          if (isActualFarmer)
+                            overduePlansAsync.when(
+                              data: (overduePlans) {
+                                if (overduePlans.isEmpty) {
+                                  return const SizedBox.shrink();
+                                }
+                                return _AnimatedFadeSlide(
+                                  controller: _animationController,
+                                  delay: 0.05,
+                                  child: const Column(
+                                    children: [
+                                      OverdueHarvestBanner(),
+                                      AppSpacing.vGapL,
+                                    ],
+                                  ),
+                                );
+                              },
+                              loading: () => const SizedBox.shrink(),
+                              error: (_, __) => const SizedBox.shrink(),
+                            ),
 
                           // Farm Info Compact Card
                           _AnimatedFadeSlide(
@@ -191,17 +195,18 @@ class _FarmerHomeScreenState extends ConsumerState<FarmerHomeScreen>
                             ),
                           ),
 
-                          // Latest Harvest Card
-                          _AnimatedFadeSlide(
-                            controller: _animationController,
-                            delay: 0.15,
-                            child: const Column(
-                              children: [
-                                LatestHarvestCard(),
-                                AppSpacing.vGapL,
-                              ],
+                          // Latest Harvest Card (only for actual farmers)
+                          if (isActualFarmer)
+                            _AnimatedFadeSlide(
+                              controller: _animationController,
+                              delay: 0.15,
+                              child: const Column(
+                                children: [
+                                  LatestHarvestCard(),
+                                  AppSpacing.vGapL,
+                                ],
+                              ),
                             ),
-                          ),
 
                           // TODO: Business Snapshot Card - will be used/changed/reconsidered in the future
                           // See: lib/features/farm/widgets/home/business_snapshot_card.dart
@@ -221,7 +226,7 @@ class _FarmerHomeScreenState extends ConsumerState<FarmerHomeScreen>
                           //   ),
                           // ),
 
-                          // Quick Actions
+                          // Quick Actions (View Planner only for actual farmers)
                           _AnimatedFadeSlide(
                             controller: _animationController,
                             delay: 0.3,
@@ -242,22 +247,24 @@ class _FarmerHomeScreenState extends ConsumerState<FarmerHomeScreen>
                                     ),
                                   ),
                                 ),
-                                AppSpacing.hGapM,
-                                Expanded(
-                                  child: Semantics(
-                                    label: 'View harvest planner',
-                                    button: true,
-                                    child: AppButton(
-                                      onPressed: () {
-                                        HapticFeedback.selectionClick();
-                                        context.go(RouteNames.farmerPlanner);
-                                      },
-                                      label: 'View Planner',
-                                      variant: AppButtonVariant.secondary,
-                                      isFullWidth: true,
+                                if (isActualFarmer) ...[
+                                  AppSpacing.hGapM,
+                                  Expanded(
+                                    child: Semantics(
+                                      label: 'View harvest planner',
+                                      button: true,
+                                      child: AppButton(
+                                        onPressed: () {
+                                          HapticFeedback.selectionClick();
+                                          context.go(RouteNames.farmerPlanner);
+                                        },
+                                        label: 'View Planner',
+                                        variant: AppButtonVariant.secondary,
+                                        isFullWidth: true,
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ],
                             ),
                           ),
