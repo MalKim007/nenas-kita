@@ -79,12 +79,12 @@ B032310135<br>
 ## Documentation
 
 For detailed documentation, see our [Wiki](https://github.com/MalKim007/nenas-kita/wiki):
-- [Architecture](wiki/Architecture)
-- [Project Structure](Wiki/Project-Structure)
-- [Database Schema](wiki/Database-Schema)
-- [API Integrations](wiki/API-Integrations)
-- [Roadmap](wiki/Roadmap)
 
+- [Architecture](https://github.com/MalKim007/nenas-kita/wiki/Architecture)
+- [Project Structure](https://github.com/MalKim007/nenas-kita/wiki/Project-Structure)
+- [Database Schema](https://github.com/MalKim007/nenas-kita/wiki/Database-Schema)
+- [API Integrations](https://github.com/MalKim007/nenas-kita/wiki/API-Integrations)
+- [Roadmap](https://github.com/MalKim007/nenas-kita/wiki/Roadmap)
 ---
 
 ## Contact
