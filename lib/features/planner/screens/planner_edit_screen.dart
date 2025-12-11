@@ -64,8 +64,9 @@ class _PlannerEditScreenState extends ConsumerState<PlannerEditScreen> {
 
   /// Update status dynamically when dates change
   void _updateComputedStatus() {
-    if (_status == HarvestStatus.harvested)
+    if (_status == HarvestStatus.harvested) {
       return; // Don't change if manually harvested
+    }
 
     final newStatus = HarvestStatusCalculator.calculateStatus(
       plantingDate: _plantingDate,
