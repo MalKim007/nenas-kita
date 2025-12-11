@@ -76,16 +76,13 @@ B032310135<br>
 **Institution**: Universiti Teknikal Malaysia Melaka (UTeM)
 
 ---
+## Documentation
 
-## Acknowledgments
-
-We would like to express our sincere gratitude to:
-
-- **LPNM (Lembaga Perindustrian Nanas Malaysia)** - For the opportunity to contribute to Melaka's pineapple industry digitalization
-- **Universiti Teknikal Malaysia Melaka (UTeM)** - For providing the educational platform and resources
-- **Course Instructors** - Sir 	Muhammad Huzaifah Bin Ismail for guidance throughout the Software Project Management course
-- **Flutter & Firebase Communities** - For excellent documentation and open-source tools
-- **Melaka Pineapple Farmers** - For inspiring this solution
+For detailed documentation, see our [Wiki](https://github.com/MalKim007/nenas-kita/wiki):
+- [Architecture](wiki/Architecture)
+- [Database Schema](wiki/Database-Schema)
+- [API Integrations](wiki/API-Integrations)
+- [Roadmap](wiki/Roadmap)
 
 ---
 
@@ -96,6 +93,7 @@ For inquiries about NenasKita:
 - **Email**: [mkim8189@gmail.com]
 - **Phone Number**: [011-72731088]
 
+---
 
 ## Table of Contents
 
@@ -103,16 +101,9 @@ For inquiries about NenasKita:
 - [Our Solution](#our-solution)
 - [Key Features](#key-features)
 - [Technology Stack](#technology-stack)
-- [Architecture](#architecture)
-- [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
-- [Database Schema](#database-schema)
-- [API Integrations](#api-integrations)
 - [Deployment](#deployment)
-- [Implementation Status](#implementation-status)
-- [Future Improvements](#future-improvements)
-- [Team](#team)
-- [Acknowledgments](#acknowledgments)
+- [Acknowledgements](#acknowledgments)
 
 ---
 
@@ -306,150 +297,6 @@ Type-safe<br>Routing
 | **Utilities** | intl, url_launcher, connectivity_plus, image_picker |
 | **Storage** | hive, hive_flutter, cloudinary_public |
 
----
-
-## Architecture
-
-### Feature-First Modular Design
-
-NenasKita follows a **feature-first architecture** that promotes code organization, maintainability, and team scalability:
-
-```
-┌────────────────────────────────────────────────────────────────┐
-│                        PRESENTATION LAYER                      │
-│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐            │
-│  │ Screens │  │ Widgets │  │  Shell  │  │ Routing │            │
-│  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘            │
-└───────┼────────────┼────────────┼────────────┼─────────────────┘
-        │            │            │            │
-┌───────┴────────────┴────────────┴────────────┴─────────────────┐
-│                         STATE LAYER                            │
-│         ┌──────────────────────────────────────┐               │
-│         │      RIVERPOD PROVIDERS              │               │
-│         │  (Generated with @riverpod)          │               │
-│         └──────────────────────────────────────┘               │
-└────────────────────────────────────────────────────────────────┘
-                              │
-┌─────────────────────────────┴──────────────────────────────────┐
-│                         DATA LAYER                             │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐             │
-│  │ Repositories│  │   Models    │  │  Services   │             │
-│  │  (Firestore)│  │  (Freezed)  │  │ (APIs/Auth) │             │
-│  └─────────────┘  └─────────────┘  └─────────────┘             │
-└────────────────────────────────────────────────────────────────┘
-                              │
-┌─────────────────────────────┴──────────────────────────────────┐
-│                       EXTERNAL SERVICES                        │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐        │
-│  │ Firebase │  │ Weather  │  │Cloudinary│  │   Maps   │        │
-│  │Firestore │  │   API    │  │   CDN    │  │   OSM    │        │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘        │
-└────────────────────────────────────────────────────────────────┘
-```
-
-### Key Architectural Decisions
-
-| Decision | Rationale |
-|----------|-----------|
-| **Offline-First** | Firestore persistence ensures app works in rural areas with poor connectivity |
-| **Code Generation** | Riverpod + Freezed reduce boilerplate and catch errors at compile time |
-| **Feature Modules** | Each feature is self-contained with its own models, providers, repos, and screens |
-| **Repository Pattern** | Abstracts Firestore operations for testability and consistency |
-| **Role-Based UI** | StatefulShellRoute provides role-specific bottom navigation |
-
----
-
-## Project Structure
-
-```
-lib/
-├── main.dart                     # App entry, Firebase & Hive initialization
-├── app.dart                      # MaterialApp.router with Riverpod
-├── firebase_options.dart         # Firebase configuration (auto-generated)
-│
-├── core/                         # Shared infrastructure
-│   ├── constants/
-│   │   └── enums.dart           # UserRole, StockStatus, HarvestStatus, etc.
-│   ├── routing/
-│   │   ├── app_router.dart      # GoRouter configuration
-│   │   ├── route_names.dart     # Route path constants
-│   │   └── route_guards.dart    # Auth & role-based redirects
-│   ├── theme/
-│   │   ├── app_colors.dart      # Material 3 color system
-│   │   ├── app_theme.dart       # ThemeData configuration
-│   │   └── app_text_styles.dart # Typography system
-│   ├── utils/
-│   │   └── firestore_converters.dart
-│   └── widgets/                  # Reusable UI components
-│       ├── app_button.dart
-│       ├── app_card.dart
-│       ├── app_text_field.dart
-│       ├── farmer_shell.dart    # Farmer bottom navigation
-│       └── buyer_shell.dart     # Buyer bottom navigation
-│
-├── features/                     # Feature modules
-│   ├── auth/                    # Authentication
-│   │   ├── models/user_model.dart
-│   │   ├── providers/user_providers.dart
-│   │   ├── repositories/user_repository.dart
-│   │   └── screens/
-│   │       ├── login_screen.dart
-│   │       └── register_screen.dart
-│   │
-│   ├── farm/                    # Farm management
-│   │   ├── models/farm_model.dart
-│   │   ├── providers/farm_providers.dart
-│   │   ├── repositories/farm_repository.dart
-│   │   └── screens/
-│   │       ├── farmer_home_screen.dart
-│   │       ├── farm_profile_screen.dart
-│   │       └── farm_edit_screen.dart
-│   │
-│   ├── product/                 # Product catalog
-│   │   ├── models/product_model.dart
-│   │   ├── providers/product_providers.dart
-│   │   ├── repositories/product_repository.dart
-│   │   └── screens/
-│   │       ├── products_list_screen.dart
-│   │       ├── product_detail_screen.dart
-│   │       └── product_add_screen.dart
-│   │
-│   ├── planner/                 # Harvest planning
-│   │   ├── models/harvest_plan_model.dart
-│   │   ├── providers/harvest_plan_providers.dart
-│   │   ├── repositories/harvest_plan_repository.dart
-│   │   └── screens/
-│   │       ├── planner_list_screen.dart
-│   │       └── planner_calendar_screen.dart
-│   │
-│   ├── market/                  # Buyer discovery & marketplace
-│   │   ├── models/
-│   │   ├── providers/
-│   │   └── screens/
-│   │       ├── buyer_discover_screen.dart
-│   │       ├── farm_discovery_screen.dart
-│   │       └── price_history_screen.dart
-│   │
-│   ├── admin/                   # LPNM admin tools
-│   │   ├── models/
-│   │   │   ├── audit_log_model.dart
-│   │   │   └── announcement_model.dart
-│   │   └── repositories/
-│   │
-│   └── settings/                # App settings
-│       └── screens/
-│           └── farmer_settings_screen.dart
-│
-└── services/                    # External integrations
-    ├── auth_service.dart        # Firebase Auth wrapper
-    ├── firebase_service.dart    # Firebase initialization
-    ├── weather_service.dart     # OpenWeatherMap API
-    ├── location_service.dart    # Geolocator wrapper
-    ├── storage_service.dart     # Cloudinary uploads
-    ├── notification_service.dart # FCM push notifications
-    └── providers/
-        └── service_providers.dart
-```
 
 ---
 
@@ -517,88 +364,6 @@ firebase deploy --only hosting
 
 ---
 
-## Database Schema
-
-### Firestore Collections
-
-```
-firestore/
-├── users/                      # User profiles
-│   └── {userId}
-│       ├── name, email, phone
-│       ├── role (farmer|buyer|wholesaler|admin)
-│       ├── district
-│       └── isVerified
-│
-├── farms/                      # Farm registrations
-│   └── {farmId}
-│       ├── ownerId, ownerName, ownerPhone
-│       ├── name, description
-│       ├── location (GeoPoint)
-│       ├── district
-│       ├── licenseNumber, licenseExpiry
-│       ├── varieties[] (Morris, Josapine, etc.)
-│       ├── hasDelivery
-│       ├── isVerified, verifiedAt, verifiedBy
-│       └── socialLinks (whatsapp, facebook, instagram)
-│
-├── farms/{farmId}/products/    # Products (subcollection)
-│   └── {productId}
-│       ├── name, description
-│       ├── category (fresh|processed)
-│       ├── variety
-│       ├── retailPrice, priceUnit
-│       ├── wholesalePrice, minWholesaleQty
-│       ├── stockStatus (available|limited|out)
-│       └── images[]
-│
-├── harvestPlans/               # Harvest planning
-│   └── {planId}
-│       ├── farmId, farmName
-│       ├── variety
-│       ├── quantity
-│       ├── plantingDate
-│       ├── expectedHarvestDate
-│       ├── actualHarvestDate
-│       └── status (planned|growing|ready|harvested)
-│
-├── priceHistory/               # Price change tracking
-├── buyerRequests/              # Buyer purchase requests
-├── auditLogs/                  # LPNM verification actions (immutable)
-├── announcements/              # System announcements
-└── appConfig/                  # App-wide settings
-```
-
-### Data Models (Freezed)
-
-All models use **Freezed** for immutability and include `fromFirestore()` / `toFirestore()` converters:
-
-- `UserModel` - User profile with role
-- `FarmModel` - Farm registration with location
-- `ProductModel` - Product with pricing
-- `HarvestPlanModel` - Harvest schedule
-- `AuditLogModel` - Verification records
-- `AnnouncementModel` - Admin notifications
-
----
-
-## API Integrations
-
-
-### Cloudinary
-
-- **Purpose**: Image storage and CDN
-- **Features**: Automatic optimization, responsive images
-- **Usage**: Farm and product image uploads
-
-### OpenStreetMap (flutter_map)
-
-- **Purpose**: Interactive maps for farm discovery
-- **Features**: Farm markers, user location, distance calculation
-- **Advantage**: Free, no API key required
-
----
-
 ## Deployment
 
 ### Android APK
@@ -620,103 +385,15 @@ flutter build web
 firebase deploy --only hosting
 ```
 ---
+## Acknowledgments
 
-## Implementation Status
+We would like to express our sincere gratitude to:
 
-A transparent overview of current implementation progress:
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                        IMPLEMENTATION STATUS                                │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│   FULLY IMPLEMENTED                      BACKEND READY (not yet integrated) │
-│   ────────────────────                   ─────────────────────────          │
-│   ✅ User Authentication                 🔧 LPNM Admin Web Portal          │
-│   ✅ Farm Profile Management             🔧 Weather Integration            │
-│   ✅ Product Catalog (CRUD)              🔧 Push Notifications             │
-│   ✅ Harvest Planner & Calendar                                            │
-│   ✅ Buyer Farm Discovery                FUTURE PLANNING                   │
-│   ✅ Interactive Map View                ─────────────────────             │
-│   ✅ Product Search & Filters            📋 Inter-Farmer Network           │
-│   ✅ Price History & Charts              📋 Regional Expansion             │
-│   ✅ Product Comparison                                                    │
-│   ✅ WhatsApp Integration                                                  │
-│   ✅ Firestore Security Rules                                              │
-│                                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Future Improvements
-
-### 1. LPNM Admin Web Portal
-
-A comprehensive web-based dashboard for LPNM administrators to manage the platform:
-
-| Feature | Description |
-|---------|-------------|
-| **Farm Verification Dashboard** | Review pending farm registrations, approve/reject with notes, track verification history |
-| **Audit Log Viewer** | Searchable, filterable log of all administrative actions for compliance |
-| **Announcement Management** | Create, schedule, and target announcements by role, district, or all users |
-| **User Management** | View all users, manage roles, handle account issues |
-| **Platform Analytics** | Dashboard showing active farmers, product listings, user engagement metrics |
-
-### 2. Weather Integration
-
-Integrate weather data into the farmer experience for better harvest planning:
-
-| Feature | Description |
-|---------|-------------|
-| **Dashboard Weather Widget** | 7-day forecast displayed on farmer home screen |
-| **Harvest Weather Alerts** | Notifications when severe weather may affect planned harvests |
-| **Weather-Aware Suggestions** | Smart recommendations based on upcoming weather conditions |
-| **Historical Weather Data** | Past weather patterns for crop cycle analysis |
-
-### 3. Inter-Farmer Harvest Network (Rangkaian Petani)
-
-**The Vision**: Create an interconnected network where Melaka's pineapple farmers can coordinate supply to prevent market oversaturation and maximize collective profitability.
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                     INTER-FARMER HARVEST NETWORK                            │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│   FARMER A          FARMER B          FARMER C          FARMER D            │
-│   ┌────────┐        ┌────────┐        ┌────────┐        ┌────────┐          │
-│   │ Morris │        │ MD2    │        │Josapine│        │ Morris │          │
-│   │ Jan 25 │        │ Feb 25 │        │ Jan 25 │        │ Mar 25 │          │
-│   │ 500kg  │        │ 300kg  │        │ 400kg  │        │ 600kg  │          │
-│   └────┬───┘        └────┬───┘        └────┬───┘        └────┬───┘          │
-│        │                 │                 │                 │              │
-│        └─────────────────┴─────────────────┴─────────────────┘              │
-│                                   │                                         │
-│                    ┌──────────────▼──────────────┐                          │
-│                    │   AGGREGATED SUPPLY VIEW    │                          │
-│                    │                             │                          │
-│                    │  Jan 2025: 900kg Morris     │                          │
-│                    │            400kg Josapine   │                          │
-│                    │  Feb 2025: 300kg MD2        │                          │
-│                    │  Mar 2025: 600kg Morris     │                          │
-│                    └─────────────────────────────┘                          │
-│                                                                             │
-│   Benefits:                                                                 │
-│   • Farmers see when others are harvesting same varieties                   │
-│   • Prevents oversupply of single variety in same period                    │
-│   • LPNM gains visibility into total Melaka supply                          │
-│   • Buyers can plan purchases based on expected availability                │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
-
-| Feature | Description |
-|---------|-------------|
-| **Shared Harvest Calendar** | Opt-in view of other farmers' expected harvest dates by variety |
-| **Supply Aggregation** | Total expected supply per variety per month across all participating farms |
-| **Market Coordination** | Alerts when multiple farmers plan same variety harvest in same period |
-| **District View** | Filter harvest network by Melaka Tengah, Alor Gajah, or Jasin |
-| **Privacy Controls** | Farmers choose what to share (variety, quantity, timing) |
+- **LPNM (Lembaga Perindustrian Nanas Malaysia)** - For the opportunity to contribute to Melaka's pineapple industry digitalization
+- **Universiti Teknikal Malaysia Melaka (UTeM)** - For providing the educational platform and resources
+- **Course Instructors** - Sir 	Muhammad Huzaifah Bin Ismail for guidance throughout the Software Project Management course
+- **Flutter & Firebase Communities** - For excellent documentation and open-source tools
+- **Melaka Pineapple Farmers** - For inspiring this solution
 
 ---
 
