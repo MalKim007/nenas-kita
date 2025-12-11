@@ -1,3 +1,8 @@
+<!-- <p align="center">
+  <!-- PROJECT LOGO: Replace with actual logo 
+  <img src="assets\images\AppIcon.jpeg" alt="NenasKita Logo" width="240" height="240">
+</p>
+-->
 <h1 align="center">NenasKita</h1>
 
 <p align="center">
@@ -13,74 +18,59 @@
   <img src="https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-green" alt="Platform">
 </p>
 
+<p align="center">
+  <!-- <a href="#live-demo--download">View Demo</a> &bull; -->
+  <a href="#key-features">Features</a> &bull;
+  <a href="#technology-stack">Technology Stack</a> &bull;
+  <a href="#getting-started">Get Started</a> &bull;
+  <a href="#team">Team</a>
+</p>
+
 ---
 
-## About
+## Executive Summary
 
-**NenasKita** is a mobile application developed to digitalize the pineapple farming industry in Melaka, Malaysia. Built in collaboration with **LPNM (Lembaga Perindustrian Nanas Malaysia)**, this platform connects farmers, buyers and wholesalers in a unified digital ecosystem.
+**NenasKita** is a comprehensive mobile application developed to digitalize and modernize the pineapple farming industry in Melaka, Malaysia. Built in collaboration with **LPNM (Lembaga Perindustrian Nanas Malaysia)**, this platform connects farmers, buyers and wholesalers in a unified digital ecosystem.
 
-## Key Features
-
-### For Farmers / Entrepreneurs
-- **Business Profile Management** - Farm registration with LPNM license & location
-- **Product Catalog** - List fresh and processed products with pricing
-- **Harvest Planner** - Calendar-based planning with status tracking
-- **WhatsApp Integration** - Direct buyer communication
-
-### For Buyers & Wholesalers
-- **Farm Discovery** - Search farms by district, verification status
-- **Interactive Map** - OpenStreetMap showing farm locations
-- **Price Comparison** - Compare products across different farms
-- **Price History** - View price trends with interactive charts
-
-## Tech Stack
-
-| Category | Technologies |
-|----------|-------------|
-| **Frontend** | Flutter 3.32.8, Dart 3.8.1 |
-| **State** | Riverpod, Freezed |
-| **Backend** | Firebase (Firestore, Auth, FCM) |
-| **Maps** | OpenStreetMap (flutter_map) |
-| **Storage** | Cloudinary CDN |
-
-## Quick Start
-
-```bash
-# Clone
-git clone https://github.com/MalKim007/nenas-kita.git
-cd nenas_kita
-
-# Install dependencies
-flutter pub get
-
-# Generate code (Riverpod + Freezed)
-dart run build_runner build --delete-conflicting-outputs
-
-# Run
-flutter run
-```
-
-## Documentation
-
-For detailed documentation, see our [Wiki](https://github.com/MalKim007/nenas-kita/wiki):
-
-- [Architecture](https://github.com/MalKim007/nenas-kita/wiki/Architecture)
-- [Project Structure](https://github.com/MalKim007/nenas-kita/wiki/Project-Structure)
-- [Database Schema](https://github.com/MalKim007/nenas-kita/wiki/Database-Schema)
-- [API Integrations](https://github.com/MalKim007/nenas-kita/wiki/API-Integrations)
-- [Roadmap](https://github.com/MalKim007/nenas-kita/wiki/Roadmap)
+The application addresses critical challenges faced by Melaka's pineapple farmers and entreprenuers, including lack of market visibility, absence of price transparency and inefficient seller-buyer connections. By providing real-time market data, harvest planning tools and direct communication channels, NenasKita empowers local farmers and entreprenuers.
 
 ---
 
 ## Team
 
-| Name | Role |
-|------|------|
-| **Muhammad Akmal Hakim Hishamuddin** (B032310162) | Project Manager & System Analyst |
-| **Muhammad Arif Aiman Bin Karim** (B032310257) | Backend Developer |
-| **Nur Aqilah Binti Zaidi** (B032310148) | Frontend Developer |
-| **Nur Aina Sofea Binti Ahmad Nazzib** (B032310108) | Database Designer |
-| **Siti Balqis Binti Mat Muharam** (B032310135) | Software Testing & Deployment |
+<table>
+<tr>
+<td align="center">
+<strong>Muhammad Akmal Hakim Hishamuddin</strong><br>
+B032310162<br>
+<em>Project Manager & System Analyst</em>
+</td>
+<td align="center">
+<strong>Muhammad Arif Aiman Bin Karim</strong><br>
+B032310257<br>
+<em>Backend Developer</em>
+</td>
+<td align="center">
+<strong>Nur Aqilah Binti Zaidi</strong><br>
+B032310148<br>
+<em>Frontend Developer</em>
+</td>
+</tr>
+<tr>
+<td align="center">
+<strong>Nur Aina Sofea Binti Ahmad Nazzib</strong><br>
+B032310108<br>
+<em>Database Designer</em>
+</td>
+<td align="center">
+<strong>Siti Balqis Binti Mat Muharam</strong><br>
+B032310135<br>
+<em>Software Testing, Validation and Deployment</em>
+</td>
+<td align="center">
+</td>
+</tr>
+</table>
 
 **Course**: Software Project Management (SULAM) 2025
 **Institution**: Universiti Teknikal Malaysia Melaka (UTeM)
@@ -88,15 +78,7 @@ For detailed documentation, see our [Wiki](https://github.com/MalKim007/nenas-ki
 ---
 ## Documentation
 
-<<<<<<< Updated upstream
 For detailed documentation, see our [Wiki](https://github.com/MalKim007/nenas-kita/wiki):
-=======
-## Acknowledgments
-
-- **LPNM** - For the opportunity to contribute to Melaka's pineapple industry
-- **UTeM** - For providing the educational platform
-- **Sir Muhammad Huzaifah Bin Ismail** - Course instructor guidance
->>>>>>> Stashed changes
 
 - [Architecture](https://github.com/MalKim007/nenas-kita/wiki/Architecture)
 - [Project Structure](https://github.com/MalKim007/nenas-kita/wiki/Project-Structure)
@@ -107,7 +89,6 @@ For detailed documentation, see our [Wiki](https://github.com/MalKim007/nenas-ki
 
 ## Contact
 
-<<<<<<< Updated upstream
 For inquiries about NenasKita:
 
 - **Email**: [mkim8189@gmail.com]
@@ -414,15 +395,15 @@ We would like to express our sincere gratitude to:
 - **Course Instructors** - Sir 	Muhammad Huzaifah Bin Ismail for guidance throughout the Software Project Management course
 - **Flutter & Firebase Communities** - For excellent documentation and open-source tools
 - **Melaka Pineapple Farmers** - For inspiring this solution
-=======
-- **Email**: mkim8189@gmail.com
-- **Phone**: 011-72731088
->>>>>>> Stashed changes
 
 ---
 
 <p align="center">
   <strong>NenasKita</strong> - Empowering Melaka's Pineapple Farmers Through Technology
   <br>
-  <em>Made with Flutter & Firebase</em>
+  <em>Memperkasakan Petani Nanas Melaka Melalui Teknologi</em>
+</p>
+
+<p align="center">
+  Made with Flutter & Firebase
 </p>
