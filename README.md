@@ -80,6 +80,7 @@ B032310135<br>
 
 For detailed documentation, see our [Wiki](https://github.com/MalKim007/nenas-kita/wiki):
 - [Architecture](wiki/Architecture)
+- [Project Structure](Wiki/Project-Strcuture)
 - [Database Schema](wiki/Database-Schema)
 - [API Integrations](wiki/API-Integrations)
 - [Roadmap](wiki/Roadmap)
